@@ -5,7 +5,9 @@ pub fn build(b: *std.build.Builder) void {
     const target = b.standardTargetOptions(.{});
     const mode = b.standardReleaseOptions();
 
-    const exe = b.addExecutable("jng-decrypt", "src/main.zig");
+    const strip = b.option(bool, "strip", "") orelse false;
+
+    const exe = b.addExecutable("jng2-decrypt", "src/main.zig");
 
     exe.addCSourceFile("lib/tiny-aes-c/aes.c", &.{});
     exe.defineCMacro("AES256", "1");
@@ -19,16 +21,8 @@ pub fn build(b: *std.build.Builder) void {
     exe.linkLibC();
     exe.setTarget(target);
     exe.setBuildMode(mode);
+    exe.strip = strip;
     exe.install();
-
-    const run_cmd = exe.run();
-    run_cmd.step.dependOn(b.getInstallStep());
-    if (b.args) |args| {
-        run_cmd.addArgs(args);
-    }
-
-    const run_step = b.step("run", "Run the app");
-    run_step.dependOn(&run_cmd.step);
 
     const exe_tests = b.addTest("src/main.zig");
     exe_tests.setTarget(target);

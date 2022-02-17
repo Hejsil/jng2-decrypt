@@ -1,4 +1,4 @@
-jng-decrypt
+jng2-decrypt
 ====
 
 Jets'n'Guns 2 stores most of its data files in `content.zip`. Extracting this is easy,

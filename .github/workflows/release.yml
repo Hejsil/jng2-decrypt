@@ -43,7 +43,7 @@ jobs:
           version: master
       - run: |
           zig build -Dstrip -Drelease -Dtarget=${{ matrix.target }}
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: jng2-decrypt.exe
           path: zig-out/bin/jng2-decrypt.exe

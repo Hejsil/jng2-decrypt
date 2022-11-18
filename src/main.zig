@@ -81,13 +81,13 @@ pub fn main() !void {
 }
 
 fn walkContentFolder(allocator: mem.Allocator, parent: fs.Dir, folder: []const u8) anyerror!void {
-    var dir = try parent.openDir(folder, .{ .iterate = true });
+    var dir = try parent.openIterableDir(folder, .{});
     var it = dir.iterate();
 
     while (try it.next()) |entry| switch (entry.kind) {
-        .Directory => try walkContentFolder(allocator, dir, entry.name),
+        .Directory => try walkContentFolder(allocator, dir.dir, entry.name),
         .File => {
-            const file = try dir.openFile(entry.name, .{ .mode = .read_write });
+            const file = try dir.dir.openFile(entry.name, .{ .mode = .read_write });
             defer file.close();
 
             // Only files starting with the header are encrypted

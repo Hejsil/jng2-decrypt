@@ -18,8 +18,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
-        step: [install, test]
-        release: [release=true, release=false]
+        optimize: [Debug, ReleaseSafe, ReleaseSmall, ReleaseFast]
     runs-on: ${{matrix.os}}
     steps:
       - uses: actions/checkout@v3
@@ -28,4 +27,4 @@ jobs:
       - uses: goto-bus-stop/setup-zig@v2
         with:
           version: master
-      - run: zig build ${{ matrix.step }} -D${{ matrix.release }}
+      - run: zig build -Doptimize=${{ matrix.optimize }}

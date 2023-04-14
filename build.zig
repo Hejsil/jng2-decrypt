@@ -12,6 +12,8 @@ pub fn build(b: *std.build.Builder) void {
         .target = target,
         .optimize = optimize,
     });
+    const install_exe = b.addInstallArtifact(exe);
+    b.default_step.dependOn(&install_exe.step);
 
     exe.addCSourceFile("lib/tiny-aes-c/aes.c", &.{});
     exe.defineCMacro("AES256", "1");
@@ -22,5 +24,4 @@ pub fn build(b: *std.build.Builder) void {
 
     exe.linkLibC();
     exe.strip = strip;
-    exe.install();
 }

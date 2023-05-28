@@ -85,8 +85,8 @@ fn walkContentFolder(allocator: mem.Allocator, parent: fs.Dir, folder: []const u
     var it = dir.iterate();
 
     while (try it.next()) |entry| switch (entry.kind) {
-        .Directory => try walkContentFolder(allocator, dir.dir, entry.name),
-        .File => {
+        .directory => try walkContentFolder(allocator, dir.dir, entry.name),
+        .file => {
             const file = try dir.dir.openFile(entry.name, .{ .mode = .read_write });
             defer file.close();
 

@@ -27,7 +27,7 @@ jobs:
         with:
           version: master
       - run: |
-          zig build -Dstrip -Doptimize=ReleaseSafe -Dtarget=${{ matrix.target }}
+          zig build -Doptimize=ReleaseSafe -Dtarget=${{ matrix.target }}
       - uses: actions/upload-artifact@v3
         with:
           name: jng2-decrypt.exe

@@ -73,11 +73,11 @@ pub fn main() !void {
     log.info("Decrypting files...", .{});
     try walkContentFolder(std.heap.page_allocator, jng_dir, content_folder);
 
-    try jng_dir.writeFile("content.txt",
-        \\dir = content
-        \\// zip = content.zip
-        \\
-    );
+    try jng_dir.writeFile(.{ .sub_path = "content.txt", .data = 
+    \\dir = content
+    \\// zip = content.zip
+    \\
+    });
 }
 
 fn walkContentFolder(allocator: mem.Allocator, parent: fs.Dir, folder: []const u8) anyerror!void {

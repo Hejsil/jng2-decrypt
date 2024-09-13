@@ -54,11 +54,11 @@ pub fn main() !void {
 
     try jng_dir.makeDir(content_folder);
 
-    var content_buf: [fs.MAX_PATH_BYTES:0]u8 = undefined;
+    var content_buf: [fs.max_path_bytes:0]u8 = undefined;
     const content_path = try jng_dir.realpath(content_folder, &content_buf);
     content_buf[content_path.len] = 0;
 
-    var content_zip_buf: [fs.MAX_PATH_BYTES]u8 = undefined;
+    var content_zip_buf: [fs.max_path_bytes]u8 = undefined;
     const content_zip_path = try fmt.bufPrintZ(&content_zip_buf, "{s}.zip", .{content_path});
 
     log.info("Extracting 'content.zip'...", .{});
@@ -119,7 +119,7 @@ fn decryptLines(allocator: mem.Allocator, in: []const u8) ![]u8 {
     var decode_buf = std.ArrayListAligned(u8, 2).init(allocator);
     defer decode_buf.deinit();
 
-    var it = mem.tokenize(u8, in, "\r\n");
+    var it = mem.tokenizeAny(u8, in, "\r\n");
     while (it.next()) |line| {
         const len = try base64.standard.Decoder.calcSizeForSlice(line);
         try decode_buf.resize(len);
@@ -127,7 +127,7 @@ fn decryptLines(allocator: mem.Allocator, in: []const u8) ![]u8 {
         try base64.standard.Decoder.decode(decode_buf.items, line);
         const decrypted = decryptInPlace(decode_buf.items);
 
-        const l = try unicode.utf16leToUtf8(
+        const l = try unicode.utf16LeToUtf8(
             decrypted,
             mem.bytesAsSlice(u16, decode_buf.items[0..decrypted.len]),
         );

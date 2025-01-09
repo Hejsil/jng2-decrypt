@@ -13,7 +13,7 @@ pub fn build(b: *std.Build) void {
     });
 
     exe.addCSourceFile(.{ .file = b.path("lib/tiny-aes-c/aes.c") });
-    exe.defineCMacro("AES256", "1");
+    exe.root_module.addCMacro("AES256", "1");
     exe.addIncludePath(b.path("lib/tiny-aes-c/"));
 
     exe.addCSourceFile(.{

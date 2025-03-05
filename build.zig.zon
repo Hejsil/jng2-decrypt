@@ -1,0 +1,7 @@
+.{
+    .name = .jng2_decrypt,
+    .version = "0.0.0",
+    .minimum_zig_version = "0.14.0",
+    .fingerprint = 0x1ffbe596970f5acc,
+    .paths = .{"."},
+}

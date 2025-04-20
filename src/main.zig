@@ -116,7 +116,7 @@ fn decryptLines(allocator: mem.Allocator, in: []const u8) ![]u8 {
     var out = try std.ArrayListUnmanaged(u8).initCapacity(allocator, in.len);
     errdefer out.deinit(allocator);
 
-    var decode_buf = std.ArrayListAligned(u8, 2).init(allocator);
+    var decode_buf = std.ArrayListAligned(u8, .@"2").init(allocator);
     defer decode_buf.deinit();
 
     var it = mem.tokenizeAny(u8, in, "\r\n");

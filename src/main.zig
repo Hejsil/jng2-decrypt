@@ -74,9 +74,9 @@ pub fn main() !void {
     try walkContentFolder(std.heap.page_allocator, jng_dir, content_folder);
 
     try jng_dir.writeFile(.{ .sub_path = "content.txt", .data = 
-    \\dir = content
-    \\// zip = content.zip
-    \\
+        \\dir = content
+        \\// zip = content.zip
+        \\
     });
 }
 

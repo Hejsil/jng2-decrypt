@@ -2,7 +2,7 @@ name: CI
 on:
   pull_request:
   schedule:
-    - cron: '0 0 * * 0'
+    - cron: "0 0 * * 0"
 
 jobs:
   lint:
@@ -10,8 +10,6 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: mlugg/setup-zig@v2
-        with:
-          version: master
       - run: zig fmt --check src build.zig
 
   test:
@@ -26,6 +24,5 @@ jobs:
           submodules: recursive
       - uses: mlugg/setup-zig@v2
         with:
-          version: master
           cache-key: ${{ matrix.os }}-${{ matrix.optimize }}
       - run: zig build -Doptimize=${{ matrix.optimize }}
